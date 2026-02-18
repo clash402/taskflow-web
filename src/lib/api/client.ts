@@ -1,13 +1,7 @@
 import { z, ZodTypeAny } from "zod";
 
+import { API_BASE_URL } from "@/lib/api/config";
 import { ApiMeta, ApiMetaSchema } from "@/lib/api/types";
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-if (!API_BASE_URL) {
-  // eslint-disable-next-line no-console
-  console.warn("NEXT_PUBLIC_API_BASE_URL is not set. API requests will fail.");
-}
 
 const DEFAULT_HEADERS = {
   "Content-Type": "application/json",
