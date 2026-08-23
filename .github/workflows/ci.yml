@@ -53,3 +53,26 @@ jobs:
 
       - name: Audit dependencies (HIGH/CRITICAL)
         run: npm audit --audit-level=high
+
+  security-container:
+    name: security-container
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build CI image
+        run: docker build --pull -f Dockerfile -t taskflow-web:ci .
+
+      - name: Scan image with Trivy (HIGH/CRITICAL)
+        run: |
+          docker run --rm \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            -v "$HOME/.cache:/root/.cache/" \
+            aquasec/trivy:0.74.0 image \
+            --severity HIGH,CRITICAL \
+            --exit-code 1 \
+            --ignore-unfixed \
+            --vuln-type os,library \
+            --no-progress \
+            taskflow-web:ci
