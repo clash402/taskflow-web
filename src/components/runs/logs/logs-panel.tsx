@@ -14,20 +14,20 @@ type Props = {
 };
 
 const levelStyles: Record<string, string> = {
-  error: "text-red-700",
-  warn: "text-amber-700",
-  info: "text-slate-700",
-  debug: "text-slate-600",
+  error: "text-status-danger",
+  warn: "text-status-warning",
+  info: "text-status-info",
+  debug: "text-ghost-slate",
 };
 
 export function LogsPanel({ logs }: Props) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg">Logs</CardTitle>
+        <CardTitle className="text-lg">Execution logs</CardTitle>
       </CardHeader>
       <CardContent>
-        <ScrollArea className="h-[340px] rounded-md border">
+        <ScrollArea className="h-[340px] rounded-xl border bg-muted/20">
           {!logs.length && (
             <div className="p-4 text-sm text-muted-foreground">
               No log events yet. Waiting for stream.

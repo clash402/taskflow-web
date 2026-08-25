@@ -22,26 +22,26 @@ export function CostPanel({ run }: Props) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg">Cost</CardTitle>
+        <CardTitle className="text-lg">Cost and budget</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-          <div className="rounded-md bg-muted/40 p-3 text-sm">
+          <div className="rounded-xl bg-muted/50 p-3 text-sm">
             <p className="text-xs text-muted-foreground">Total prompt tokens</p>
             <p className="mt-1 font-semibold">{formatTokens(run.totals?.prompt_tokens)}</p>
           </div>
-          <div className="rounded-md bg-muted/40 p-3 text-sm">
+          <div className="rounded-xl bg-muted/50 p-3 text-sm">
             <p className="text-xs text-muted-foreground">Total completion tokens</p>
             <p className="mt-1 font-semibold">{formatTokens(run.totals?.completion_tokens)}</p>
           </div>
-          <div className="rounded-md bg-muted/40 p-3 text-sm">
+          <div className="rounded-xl bg-muted/50 p-3 text-sm">
             <p className="text-xs text-muted-foreground">Total USD</p>
             <p className="mt-1 font-semibold">{formatUsd(total)}</p>
           </div>
         </div>
 
         {typeof budget === "number" && (
-          <div className="rounded-md border p-3 text-sm">
+          <div className="rounded-xl border border-status-warning/20 bg-status-warning/5 p-3 text-sm">
             <p>
               Budget {formatUsd(budget)} | Remaining {formatUsd(remaining)}
             </p>

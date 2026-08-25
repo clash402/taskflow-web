@@ -1,6 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import { Braces, FileStack, Network } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { WorkflowGraph } from "@/components/runs/graph/workflow-graph";
@@ -48,22 +49,32 @@ export function WorkflowsPageView() {
 
   return (
     <div className="space-y-6">
-      <header>
-        <h1 className="text-2xl font-semibold tracking-tight">Workflow Templates</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Browse template contracts and preview their workflow DAG.
+      <header className="border-b border-border pb-8">
+        <p className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+          <Network className="h-4 w-4" />
+          Reusable execution contracts
+        </p>
+        <h1 className="text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">
+          Workflow templates
+        </h1>
+        <p className="mt-3 max-w-2xl text-[15px] leading-6 text-muted-foreground">
+          Inspect graph structure, dependencies, and contracts before a template is used to
+          coordinate a run.
         </p>
       </header>
 
       <div className="grid gap-6 lg:grid-cols-[320px_1fr]">
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">Templates</CardTitle>
+        <Card className="h-fit">
+          <CardHeader className="border-b border-border pb-5">
+            <CardTitle className="flex items-center gap-2 text-base">
+              <FileStack className="h-4 w-4 text-primary" />
+              Templates
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
             {!workflowsQuery.data?.length && (
-              <p className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
-                Upload a workflow template to get started.
+              <p className="rounded-xl border border-dashed bg-muted/25 p-4 text-sm text-muted-foreground">
+                No templates are available from the API.
               </p>
             )}
 
@@ -72,8 +83,10 @@ export function WorkflowsPageView() {
                 key={workflow.id}
                 type="button"
                 onClick={() => setSelectedId(workflow.id)}
-                className={`w-full rounded-md border p-3 text-left transition ${
-                  selectedId === workflow.id ? "border-primary bg-primary/5" : "hover:bg-muted/40"
+                className={`w-full rounded-xl border p-3 text-left transition ${
+                  selectedId === workflow.id
+                    ? "border-primary bg-primary/5"
+                    : "hover:border-primary/25 hover:bg-muted/40"
                 }`}
               >
                 <div className="flex items-start justify-between gap-2">
@@ -89,8 +102,8 @@ export function WorkflowsPageView() {
         </Card>
 
         <div className="space-y-6">
-          <Card>
-            <CardHeader>
+          <Card className="overflow-hidden">
+            <CardHeader className="border-b border-border pb-5">
               <CardTitle>{selectedWorkflowQuery.data?.name || "Select a template"}</CardTitle>
               <CardDescription>
                 {selectedWorkflowQuery.data?.description || "No description"}
@@ -105,11 +118,14 @@ export function WorkflowsPageView() {
           </Card>
 
           <Card>
-            <CardHeader>
-              <CardTitle className="text-base">Contracts</CardTitle>
+            <CardHeader className="pb-4">
+              <CardTitle className="flex items-center gap-2 text-base">
+                <Braces className="h-4 w-4 text-primary" />
+                Execution contracts
+              </CardTitle>
             </CardHeader>
             <CardContent>
-              <pre className="max-h-80 overflow-auto rounded-md bg-slate-950 p-3 text-xs text-slate-100">
+              <pre className="max-h-80 overflow-auto rounded-xl bg-ghost-ink p-4 font-mono text-xs leading-5 text-white/90">
                 {stringify(selectedWorkflowQuery.data?.contracts)}
               </pre>
             </CardContent>
@@ -124,7 +140,7 @@ export function WorkflowsPageView() {
                   enabled.
                 </p>
                 <textarea
-                  className="min-h-48 w-full rounded-md border bg-muted/20 p-3 font-mono text-xs"
+                  className="min-h-48 w-full rounded-xl border bg-muted/20 p-3 font-mono text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   defaultValue={stringify(
                     selectedWorkflowQuery.data || { id: "", name: "", version: "" }
                   )}

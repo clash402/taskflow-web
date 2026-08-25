@@ -4,25 +4,40 @@
 
 @layer base {
   :root {
-    --background: 0 0% 99%;
-    --foreground: 222 47% 11%;
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 217 91% 60%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215 16% 47%;
-    --accent: 210 40% 94%;
-    --accent-foreground: 222 47% 11%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 217 91% 60%;
+    --ghost-ink: 206 55% 11%;
+    --ghost-slate: 206 19% 41%;
+    --ghost-steel: 223 10% 65%;
+    --ghost-blush: 4 73% 93%;
+    --ghost-sand: 24 50% 79%;
+    --ghost-canvas: 48 24% 96%;
+    --ghost-surface: 40 100% 99%;
+    --ghost-surface-muted: 210 7% 95%;
+    --ghost-border: 210 11% 86%;
+    --product-accent: 214 40% 40%;
+    --status-info: 211 54% 40%;
+    --status-success: 152 48% 30%;
+    --status-warning: 37 76% 33%;
+    --status-danger: 0 51% 46%;
+    --status-blocked: 259 22% 46%;
+    --background: var(--ghost-canvas);
+    --foreground: var(--ghost-ink);
+    --card: var(--ghost-surface);
+    --card-foreground: var(--ghost-ink);
+    --popover: var(--ghost-surface);
+    --popover-foreground: var(--ghost-ink);
+    --primary: var(--product-accent);
+    --primary-foreground: 0 0% 100%;
+    --secondary: var(--ghost-surface-muted);
+    --secondary-foreground: var(--ghost-ink);
+    --muted: var(--ghost-surface-muted);
+    --muted-foreground: var(--ghost-slate);
+    --accent: 214 32% 92%;
+    --accent-foreground: var(--ghost-ink);
+    --destructive: var(--status-danger);
+    --destructive-foreground: 0 0% 100%;
+    --border: var(--ghost-border);
+    --input: var(--ghost-border);
+    --ring: var(--product-accent);
     --radius: 0.75rem;
   }
 
@@ -32,12 +47,21 @@
 
   body {
     @apply bg-background text-foreground antialiased;
+    background-image: radial-gradient(
+      circle at 92% -8%,
+      hsl(var(--product-accent) / 0.1),
+      transparent 34rem
+    );
+  }
+
+  ::selection {
+    background: hsl(var(--product-accent) / 0.16);
   }
 }
 
 .bg-grid {
-  background-image: radial-gradient(circle at top right, rgba(56, 189, 248, 0.1), transparent 40%),
-    linear-gradient(rgba(15, 23, 42, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(15, 23, 42, 0.02) 1px, transparent 1px);
-  background-size: auto, 24px 24px, 24px 24px;
+  background-image:
+    linear-gradient(hsl(var(--ghost-border) / 0.45) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--ghost-border) / 0.45) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
