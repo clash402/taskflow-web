@@ -1,6 +1,6 @@
 "use client";
 
-import { FiRotateCcw } from "react-icons/fi";
+import { ListTree, RotateCcw } from "lucide-react";
 
 import { RunStatusBadge } from "@/components/runs/run-status-badge";
 import {
@@ -41,18 +41,21 @@ export function StepTimeline({ steps, onRetryStep, isRetrying }: Props) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg">Step Timeline</CardTitle>
+        <CardTitle className="flex items-center gap-2 text-lg">
+          <ListTree className="h-5 w-5 text-primary" />
+          Step timeline
+        </CardTitle>
       </CardHeader>
       <CardContent>
         {!steps.length && (
-          <div className="rounded-md border border-dashed p-6 text-sm text-muted-foreground">
+          <div className="rounded-xl border border-dashed bg-muted/20 p-6 text-sm text-muted-foreground">
             No steps emitted yet.
           </div>
         )}
         {!!steps.length && (
           <Accordion type="single" collapsible className="space-y-1">
             {steps.map((step) => (
-              <AccordionItem key={step.id} value={step.id} className="rounded-md border px-4">
+              <AccordionItem key={step.id} value={step.id} className="rounded-xl border px-4">
                 <AccordionTrigger className="hover:no-underline">
                   <div className="grid flex-1 grid-cols-1 gap-2 text-left sm:grid-cols-5">
                     <span className="font-medium">{step.id}</span>
@@ -82,8 +85,8 @@ export function StepTimeline({ steps, onRetryStep, isRetrying }: Props) {
                         disabled={isRetrying}
                         onClick={() => onRetryStep(step.id)}
                       >
-                        <FiRotateCcw className="h-3.5 w-3.5" />
-                        Retry Step
+                        <RotateCcw className="h-3.5 w-3.5" />
+                        Retry step
                       </Button>
                     </div>
 
@@ -109,7 +112,7 @@ export function StepTimeline({ steps, onRetryStep, isRetrying }: Props) {
                         <h4 className="mb-2 text-xs font-semibold uppercase text-muted-foreground">
                           Input
                         </h4>
-                        <pre className="max-h-48 overflow-auto rounded-md bg-slate-950 p-3 text-xs text-slate-100">
+                        <pre className="max-h-48 overflow-auto rounded-xl bg-ghost-ink p-4 font-mono text-xs leading-5 text-white/90">
                           {stringify(step.input)}
                         </pre>
                       </section>
@@ -117,7 +120,7 @@ export function StepTimeline({ steps, onRetryStep, isRetrying }: Props) {
                         <h4 className="mb-2 text-xs font-semibold uppercase text-muted-foreground">
                           Output
                         </h4>
-                        <pre className="max-h-48 overflow-auto rounded-md bg-slate-950 p-3 text-xs text-slate-100">
+                        <pre className="max-h-48 overflow-auto rounded-xl bg-ghost-ink p-4 font-mono text-xs leading-5 text-white/90">
                           {stringify(step.output)}
                         </pre>
                       </section>
@@ -127,7 +130,7 @@ export function StepTimeline({ steps, onRetryStep, isRetrying }: Props) {
                       <h4 className="mb-2 text-xs font-semibold uppercase text-muted-foreground">
                         Errors & retries
                       </h4>
-                      <pre className="max-h-40 overflow-auto rounded-md bg-slate-950 p-3 text-xs text-slate-100">
+                      <pre className="max-h-40 overflow-auto rounded-xl bg-ghost-ink p-4 font-mono text-xs leading-5 text-white/90">
                         {stringify(step.error)}
                       </pre>
                     </section>
@@ -136,7 +139,7 @@ export function StepTimeline({ steps, onRetryStep, isRetrying }: Props) {
                       <h4 className="mb-2 text-xs font-semibold uppercase text-muted-foreground">
                         Tool calls / logs
                       </h4>
-                      <pre className="max-h-40 overflow-auto rounded-md bg-slate-950 p-3 text-xs text-slate-100">
+                      <pre className="max-h-40 overflow-auto rounded-xl bg-ghost-ink p-4 font-mono text-xs leading-5 text-white/90">
                         {step.logs.join("\n") || "-"}
                       </pre>
                     </section>

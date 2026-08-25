@@ -2,7 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
-import { FiRefreshCw, FiSlash } from "react-icons/fi";
+import { Activity, Ban, Clock3, RefreshCw, Workflow } from "lucide-react";
 
 import { RunStatusBadge } from "@/components/runs/run-status-badge";
 import { WorkflowGraph } from "@/components/runs/graph/workflow-graph";
@@ -234,32 +234,36 @@ export function RunDetailView({ runId }: { runId: string }) {
 
   return (
     <div className="space-y-6">
-      <Card>
-        <CardHeader>
+      <Card className="overflow-hidden">
+        <CardHeader className="border-b border-border bg-muted/30 pb-5">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
-              <CardTitle className="text-xl">Run {run.id}</CardTitle>
+              <p className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-primary">
+                <Activity className="h-4 w-4" />
+                Live run
+              </p>
+              <CardTitle className="font-mono text-lg">{run.id}</CardTitle>
               <CardDescription className="mt-1">{run.task}</CardDescription>
             </div>
             <div className="space-y-2 text-right">
               <RunStatusBadge status={run.status} />
               <p className="text-xs text-muted-foreground">
-                Stream: {streamState === "open" ? "SSE" : "Polling"}
+                Updates: {streamState === "open" ? "live stream" : "polling fallback"}
               </p>
             </div>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid gap-3 sm:grid-cols-3">
-            <div className="rounded-md border p-3 text-sm">
+            <div className="rounded-xl border bg-card p-3 text-sm">
               <p className="text-xs text-muted-foreground">Started</p>
               <p className="mt-1 font-medium">{formatDateTime(run.started_at)}</p>
             </div>
-            <div className="rounded-md border p-3 text-sm">
+            <div className="rounded-xl border bg-card p-3 text-sm">
               <p className="text-xs text-muted-foreground">Elapsed</p>
               <p className="mt-1 font-medium">{durationBetween(run.started_at, run.ended_at)}</p>
             </div>
-            <div className="rounded-md border p-3 text-sm">
+            <div className="rounded-xl border bg-card p-3 text-sm">
               <p className="text-xs text-muted-foreground">Template</p>
               <p className="mt-1 font-medium">
                 {run.template ? `${run.template.name} (${run.template.version})` : "None"}
@@ -274,8 +278,8 @@ export function RunDetailView({ runId }: { runId: string }) {
               disabled={!canCancel || cancelMutation.isPending}
               onClick={() => cancelMutation.mutate()}
             >
-              <FiSlash className="h-4 w-4" />
-              Cancel Run
+              <Ban className="h-4 w-4" />
+              Cancel run
             </Button>
             <Button
               type="button"
@@ -283,13 +287,13 @@ export function RunDetailView({ runId }: { runId: string }) {
               disabled={retryMutation.isPending}
               onClick={() => retryMutation.mutate({})}
             >
-              <FiRefreshCw className="h-4 w-4" />
-              Retry Run
+              <RefreshCw className="h-4 w-4" />
+              Retry run
             </Button>
           </div>
 
           {(cancelMutation.error || retryMutation.error) && (
-            <div className="rounded-md border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
+            <div className="rounded-xl border border-status-danger/25 bg-status-danger/5 p-3 text-sm text-status-danger">
               {cancelMutation.error instanceof ApiError && (
                 <p>Cancel failed: {cancelMutation.error.message}</p>
               )}
@@ -309,9 +313,12 @@ export function RunDetailView({ runId }: { runId: string }) {
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Workflow Graph</CardTitle>
+      <Card className="overflow-hidden">
+        <CardHeader className="border-b border-border pb-5">
+          <CardTitle className="flex items-center gap-2 text-lg">
+            <Workflow className="h-5 w-5 text-primary" />
+            Workflow graph
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <WorkflowGraph nodes={run.graph.nodes} edges={run.graph.edges} />
@@ -344,7 +351,10 @@ export function RunDetailView({ runId }: { runId: string }) {
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">Final Outcome</CardTitle>
+          <CardTitle className="flex items-center gap-2 text-lg">
+            <Clock3 className="h-5 w-5 text-primary" />
+            Final outcome
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-sm text-muted-foreground whitespace-pre-wrap">

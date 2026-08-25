@@ -1,6 +1,7 @@
 "use client";
 
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { ArrowRight, SlidersHorizontal } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
@@ -59,12 +60,18 @@ export function CreateRunCard() {
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Create Run</CardTitle>
-        <CardDescription>Submit a task and optionally constrain budget/time.</CardDescription>
+    <Card className="overflow-hidden">
+      <CardHeader className="border-b border-border bg-muted/30 pb-5">
+        <div className="mb-1 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-primary">
+          <SlidersHorizontal className="h-4 w-4" strokeWidth={1.75} />
+          Execution contract
+        </div>
+        <CardTitle>Launch a constrained run</CardTitle>
+        <CardDescription>
+          Define the objective, workflow, budget, and execution boundary.
+        </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="pt-6">
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="space-y-2">
             <Label htmlFor="task">Task prompt</Label>
@@ -82,7 +89,7 @@ export function CreateRunCard() {
               <Label htmlFor="template">Template</Label>
               <select
                 id="template"
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                className="flex h-10 w-full rounded-xl border border-input bg-card px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 value={templateId}
                 onChange={(event) => setTemplateId(event.target.value)}
               >
@@ -122,7 +129,7 @@ export function CreateRunCard() {
           </div>
 
           {mutationError && (
-            <div className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+            <div className="rounded-xl border border-status-danger/25 bg-status-danger/5 px-3 py-2 text-sm text-status-danger">
               <p>Failed to create run. Try again.</p>
               {mutationError instanceof ApiError && mutationError.requestId && (
                 <p className="text-xs text-destructive/80">Request ID: {mutationError.requestId}</p>
@@ -131,7 +138,8 @@ export function CreateRunCard() {
           )}
 
           <Button type="submit" disabled={createRunMutation.isPending}>
-            {createRunMutation.isPending ? "Creating..." : "Create Run"}
+            {createRunMutation.isPending ? "Creating…" : "Create run"}
+            {!createRunMutation.isPending ? <ArrowRight className="h-4 w-4" /> : null}
           </Button>
         </form>
       </CardContent>

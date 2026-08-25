@@ -5,6 +5,10 @@ const config: Config = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["var(--font-manrope)", "ui-sans-serif", "system-ui"],
+        mono: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
@@ -44,6 +48,20 @@ const config: Config = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
+        ghost: {
+          ink: "hsl(var(--ghost-ink))",
+          slate: "hsl(var(--ghost-slate))",
+          steel: "hsl(var(--ghost-steel))",
+          blush: "hsl(var(--ghost-blush))",
+          sand: "hsl(var(--ghost-sand))",
+        },
+        status: {
+          info: "hsl(var(--status-info))",
+          success: "hsl(var(--status-success))",
+          warning: "hsl(var(--status-warning))",
+          danger: "hsl(var(--status-danger))",
+          blocked: "hsl(var(--status-blocked))",
+        },
       },
     },
   },

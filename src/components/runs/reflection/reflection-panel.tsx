@@ -73,11 +73,11 @@ export function ReflectionPanel({ events, diagnostics }: Props) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg">Reflection Diagnostics</CardTitle>
+        <CardTitle className="text-lg">Reflection diagnostics</CardTitle>
       </CardHeader>
       <CardContent>
         {!entries.length && (
-          <div className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
+          <div className="rounded-xl border border-dashed bg-muted/20 p-4 text-sm text-muted-foreground">
             No reflection events recorded for this run.
           </div>
         )}
@@ -85,7 +85,7 @@ export function ReflectionPanel({ events, diagnostics }: Props) {
         {!!entries.length && (
           <div className="space-y-3">
             {entries.map((item) => (
-              <article key={item.id} className="rounded-md border p-4 text-sm">
+              <article key={item.id} className="rounded-xl border bg-card p-4 text-sm">
                 <p className="font-semibold">Why replanned</p>
                 <p className="mt-1 whitespace-pre-wrap text-muted-foreground">{item.why}</p>
 

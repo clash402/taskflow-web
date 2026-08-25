@@ -31,12 +31,12 @@ type Props = {
 };
 
 const statusColor: Record<StepStatus, string> = {
-  queued: "#94a3b8",
-  running: "#0284c7",
-  completed: "#16a34a",
-  failed: "#dc2626",
-  canceled: "#64748b",
-  skipped: "#64748b",
+  queued: "#9EA3B0",
+  running: "#2F659F",
+  completed: "#28724F",
+  failed: "#B33A3A",
+  canceled: "#546A7B",
+  skipped: "#546A7B",
 };
 
 const getNodeLevelMap = (nodes: GraphNode[], edges: GraphEdge[]) => {
@@ -83,7 +83,7 @@ export function WorkflowGraph({ nodes, edges }: Props) {
 
     const flowNodes: Node[] = Array.from(grouped.entries()).flatMap(([level, levelNodes]) =>
       levelNodes.map((node, rowIndex) => {
-        const color = node.status ? statusColor[node.status] : "#64748b";
+        const color = node.status ? statusColor[node.status] : "#546A7B";
 
         return {
           id: node.id,
@@ -97,7 +97,8 @@ export function WorkflowGraph({ nodes, edges }: Props) {
             borderRadius: 12,
             border: `1px solid ${color}`,
             boxShadow: `inset 0 0 0 1px ${color}25`,
-            background: "#ffffff",
+            background: "#FFFEFC",
+            color: "#0D1F2D",
             fontSize: 12,
           },
         };
@@ -119,14 +120,14 @@ export function WorkflowGraph({ nodes, edges }: Props) {
 
   if (!nodes.length) {
     return (
-      <div className="flex h-[280px] items-center justify-center rounded-lg border border-dashed text-sm text-muted-foreground">
+      <div className="flex h-[280px] items-center justify-center rounded-xl border border-dashed bg-muted/20 text-sm text-muted-foreground">
         Workflow graph will appear once the planner emits nodes.
       </div>
     );
   }
 
   return (
-    <div className="h-[340px] rounded-lg border bg-white">
+    <div className="bg-grid h-[340px] overflow-hidden rounded-xl border bg-card">
       <ReactFlowProvider>
         <ReactFlow
           fitView
